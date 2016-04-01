@@ -1,0 +1,58 @@
+---
+title: "Untitled"
+author: "MeredithKupinski"
+date: "April 1, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Dowload Data
+```{r downloadData}
+gap.in <- read.csv("http://naupaka.net/files/gapminder.csv")
+#install.packages("dplyr",dependencies=TRUE)
+library("dplyr")
+gap.in %>% filter(country=="China"|country=="Argentina"|country=="Brazil")
+
+plot(gap.in$year[gap.in$country=="China"] ,gap.in$gdp[gap.in$country=="China"] , ylab="GDP",xlab="year",main="China")
+plot(gap.in$year[gap.in$country=="Brazil"] ,gap.in$gdp[gap.in$country=="Brazil"] , ylab="GDP",xlab="year",main="Brazil")
+plot(gap.in$year[gap.in$country=="Argentina"] ,gap.in$gdp[gap.in$country=="Argentina"] , ylab="GDP",xlab="year",main="Argentina")
+#Mean
+gap.in %>% 
+  group_by(country) %>% 
+  summarize(meanlifeExp=mean(lifeExp)) %>% 
+  arrange(desc(meanlifeExp))%>% 
+  filter(country=="China"|country=="Argentina"|country=="Brazil")
+#Max
+gap.in %>% 
+  group_by(country) %>% 
+  summarize(maxlifeExp=max(lifeExp)) %>% 
+  filter(country=="China"|country=="Argentina"|country=="Brazil")
+#Min
+gap.in %>% 
+  group_by(country) %>% 
+  summarize(maxlifeExp=min(lifeExp)) %>% 
+  filter(country=="China"|country=="Argentina"|country=="Brazil")
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
